@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="../public/images/android-chrome-512x512.png" type="image/x-icon">
+  <link rel="stylesheet" href="/stylesheets/style.css">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@3.2.0/fonts/remixicon.css" rel="stylesheet">
+  <title>VS Code Lite</title>
+</head>
+
+<body>
+  <div id="main">
+    <div id="left">
+      <h1>VS Code Lite</h1>
+      <div id="line"></div>
+      <div id="filehead">
+        <h4>Folder name</h4>
+        <div id="icons">
+          <i id="filecreate" class="ri-file-line"></i>
+          <i id="foldercreate" class="ri-folder-3-line"></i>
+          <i class="ri-refresh-line"></i>
+        </div>
+      </div>
+      <form id="folderform" action="/foldercreate">
+        <input name="foldname" type="text" placeholder="Folder Name">
+      </form>
+      <form id="fileform" action="/filecreate">
+        <input name="filename" type="text" placeholder="File Name">
+      </form>
+      
+        <% files.forEach(function(elem){ %>
+          <div class="file">
+            <% if(elem.isDirectory()){ %>
+              <i class="ri-folder-3-line"></i>
+            <% } else { %>
+              <i class="ri-file-line"></i>
+            <% } %>
+            <% if(elem.isDirectory()){ %>
+              <%= elem.name %>
+            <% } else { %>
+              <a href="/file/<%= elem.name %>"><%= elem.name %></a>
+            <% } %>
+        </div>
+       <% }) %>
+      
+    </div>
+    <div id="right">
+      <div id="rightnav">
+        <h3><%= filename %><a href="/"><i class="ri-close-circle-line"></i></a></h3>
+      </div>
+      <form action="/filechange/<%= filename %>" method="post">
+      <textarea name="filedata"><%= filedata %></textarea>
+      <input type="submit" value="Save File">
+    </form>
+    </div>
+  </div>
+
+
+  <script>
+  var filecreateicon =  document.querySelector("#filecreate")
+  var foldercreateicon =  document.querySelector("#foldercreate")
+
+  function turnOffBoth(){
+    var allelems =[...document.querySelectorAll("form")]
+    allelems.forEach(function(elem){
+      elem.style.display = "none"
+    })
+  }
+
+  filecreateicon.addEventListener("click",function(){
+    turnOffBoth()
+    document.querySelector("#fileform").style.display = "initial"
+  })
+  foldercreateicon.addEventListener("click",function(){
+    turnOffBoth()
+    document.querySelector("#folderform").style.display = "initial"
+  })
+  </script>
+</body>
+
+</html>
